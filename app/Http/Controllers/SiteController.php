@@ -3,13 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Models\Site;
-use Illuminate\Http\Request;
-use App\Http\Requests\StoreSiteRequest;
+use App\Models\Endpoint;
 use Illuminate\Support\Arr;
+use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use App\Http\Resources\SiteResource;
+use App\Http\Requests\StoreSiteRequest;
+use App\Http\Resources\EndpointResource;
 
 class SiteController extends Controller
 {
+    public function show(Site $site)
+    {
+        
+        return inertia()->render('Sites/show', [
+            'site' => SiteResource::make($site->load('endpoints:id')),
+            'endpoints' => EndpointResource::collection(Endpoint::where('site_id', $site->id)->get()),
+        ]);
+    }
+
     public function store(StoreSiteRequest $request)
     {
         $data = $request->validated();
@@ -34,13 +46,10 @@ class SiteController extends Controller
         return back();
     }
 
-    public function destroy(Request $request, Site $site)
+    public function destroy(Site $site)
     {
-        $site->update([
-            'notification_emails' => array_diff($site->notification_emails, [$request->email])
-        ]);
+        $site->delete();
 
         return back();
     }
-
 }

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('scheme');
             $table->string('domain');
+            $table->text('description');
             $table->boolean('default')->default(0);
             $table->foreignId('user_id')->constrained();
             $table->json('notification_emails')->nullable();

@@ -9,18 +9,10 @@ use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
-    public function __invoke(Request $request, Site $site)
+    public function __invoke()
     {
-
-         $site->update(['default' => true]);
-
-         if (!$site->exists) {
-            $site = $request->user()->sites()->whereDefault(true)->first() ?? $request->user()->sites()->first();
-         }
-
         return inertia()->render('Dashboard', [
-            'site' => SiteResource::make($site),
-            'endpoints' => EndpointResource::collection($site->endpoints??[]),
+            'sites' => SiteResource::collection(Site::get()),
         ]);
     }
 }

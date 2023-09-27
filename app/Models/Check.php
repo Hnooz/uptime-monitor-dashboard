@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class Check extends Model
 {
-    use HasFactory;
+    use HasFactory; 
 
     protected $guarded = [];
 
@@ -26,5 +26,12 @@ class Check extends Model
     public function statusText(): string
     {
         return Response::$statusTexts[$this->response_code] ?? 'Unknown';
+    }
+
+    public function previous()
+    {
+        return $this->endpoint
+            ->checks()->orderBy('id', 'desc')
+            ->where('id', '<', $this->id)->first();
     }
 }

@@ -1,5 +1,5 @@
 <script setup>
-import SiteSelector from '@/Components/SiteSelector.vue'
+import SiteSelector from '@/Pages/Sites/create.vue'
 import AppLayout from '@/Layouts/AppLayout.vue';
 import Check from '@/Components/Check.vue'
 import { Head, useForm, usePage, Link } from '@inertiajs/vue3';

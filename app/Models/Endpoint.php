@@ -19,17 +19,6 @@ class Endpoint extends Model
         'next_check' => 'date'
     ];
 
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::creating(function($endpoint){
-            $parsed = parse_url("{$endpoint->site->url()}/$endpoint->location");
-            $endpoint->location = '/'.trim(Arr::get($parsed, 'path'), '/');
-            $endpoint->next_check = now()->addSeconds($endpoint->frequency);
-        });
-    }
-
     public function site(): BelongsTo
     {
         return $this->belongsTo(Site::class);

@@ -50,4 +50,13 @@ class Site extends Model
         return "$this->scheme://$this->domain";    
     }
 
+    public function name()
+    {
+        $parsed_url = parse_url($this->domain);
+
+        $host_parts = explode('.', $parsed_url['host']);
+
+        return $host_parts[1];
+    }
+
 }

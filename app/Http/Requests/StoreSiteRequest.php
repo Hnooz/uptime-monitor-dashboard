@@ -20,6 +20,7 @@ class StoreSiteRequest extends FormRequest
         return [
             'domain' => ['required', 'url'],
             'scheme' => ['required'],
+            'description' => ['required'],
             'user_id' => ['required'],
         ];
     }

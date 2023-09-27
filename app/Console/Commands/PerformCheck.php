@@ -14,7 +14,7 @@ class PerformCheck extends Command
 
     public function handle()
     {
-        $endpoints = Endpoint::where('next_check', '<=', now())->each(function($endpoint){
+        Endpoint::where('next_check', '<=', now())->each(function($endpoint){
             PerformEndpointCheck::dispatch($endpoint);
         });
 
