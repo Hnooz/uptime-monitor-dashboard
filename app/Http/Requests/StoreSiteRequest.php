@@ -19,27 +19,8 @@ class StoreSiteRequest extends FormRequest
     {
         return [
             'domain' => ['required', 'url'],
-            'scheme' => ['required'],
             'description' => ['required'],
             'user_id' => ['required'],
         ];
-    }
-
-    protected function prepareForValidation(): void
-    {
-        $parsed = parse_url($this['domain']);
-
-        $this->merge([
-            'scheme' => Arr::get($parsed, 'scheme'),
-        ]);
-    }
-
-    protected function passedValidation(): void
-    {
-        $parsed = parse_url($this['domain']);
-
-        $this->replace([
-            'domain' => Arr::get($parsed, 'host'),
-        ]);
     }
 }

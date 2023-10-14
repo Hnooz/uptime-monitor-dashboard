@@ -8,6 +8,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\EndpointController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SiteNotificationController;
+use App\Http\Controllers\UpdateSiteConnectionController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -26,12 +27,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
    
-
+    
     Route::controller(SiteController::class)->group(function(){
         Route::get('/sites/{site}', 'show')->name('sites.show');
         Route::post('/sites', 'store')->name('sites.store');
         Route::delete('/sites/{site}', 'destroy')->name('sites.destroy');
     });
+
+    Route::put('/sites/{site}', UpdateSiteConnectionController::class)->name('sites.update-connection');
 
     Route::controller(SiteNotificationController::class)->group(function(){
         Route::put('/sites/{site}/notification/emails', 'store')->name('notification.emails.store');

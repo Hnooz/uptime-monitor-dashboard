@@ -19,6 +19,7 @@ class SiteResource extends JsonResource
             'name' => $this->name(),
             'domain' => $this->domain,
             'description' => $this->description,
+            'is_connected' => $this->is_connected,
             'endpoints_count' => count($this->endpoints),
             'notification_emails' => $this->notification_emails
         ];

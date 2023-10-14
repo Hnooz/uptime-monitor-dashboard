@@ -15,7 +15,6 @@ class SiteController extends Controller
 {
     public function show(Site $site)
     {
-        
         return inertia()->render('Sites/show', [
             'site' => SiteResource::make($site->load('endpoints:id')),
             'endpoints' => EndpointResource::collection(Endpoint::where('site_id', $site->id)->get()),
@@ -26,9 +25,14 @@ class SiteController extends Controller
     {
         $data = $request->validated();
         
-        $site = Site::create($data);
+        Site::create($data);
 
-        return redirect()->route('dashboard', $site);
+        session()->flash('toast', [
+            'type' => 'success',
+            'message' => 'site successfully created',
+        ]);
+
+        return back();
     }
 
     public function update(Request $request, Site $site)
@@ -43,6 +47,11 @@ class SiteController extends Controller
             'notification_emails' => Arr::prepend($site->notification_emails, $request->email)
         ]);
 
+        session()->flash('toast', [
+            'type' => 'success',
+            'message' => 'site emails successfully created',
+        ]);
+        
         return back();
     }
 

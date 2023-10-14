@@ -1,5 +1,4 @@
 <script setup>
-import SiteSelector from '@/Pages/Sites/create.vue'
 import TextInput from '@/Components/TextInput.vue'
 import InputLabel from '@/Components/InputLabel.vue'
 import Endpoint from '@/Components/Endpoint.vue'
@@ -8,7 +7,6 @@ import PrimaryButton from '@/Components/PrimaryButton.vue'
 import EmailNotification from '@/Components/EmailNotification.vue'
 import AppLayout from '@/Layouts/AppLayout.vue';
 import { Head, useForm, usePage } from '@inertiajs/vue3';
-
 
 const props = defineProps({
     site: Object,
@@ -51,13 +49,13 @@ const submit = () => {
                     </div>
                     <div>
                         <input-label for="frequency" value="Frequency" class="sr-only" />
-                        <select name="frequency" id="frequency" v-model="form.frequency" class="block w-full px-4 py-1.5 border-gray-300 rounded-lg focus:border-indigo-500">
+                        <select name="frequency" id="frequency" v-model="form.frequency" class="block w-44 px-4 py-1.5 border-gray-300 rounded-lg focus:border-indigo-500">
                             <option :value="frequency.frequency" v-for="frequency in usePage().props.frequencies.data" :key="frequency.frequency">{{ frequency.label }}</option>
                         </select>
                     </div>
                     <primary-button>Add</primary-button>
                 </form>
-                <div class="mt-8">
+                <div v-if="endpoints.data.length > 0" class="mt-8">
                     <h1 class="font-semibold text-lg text-gray-800 leading-tight">
                         Currently monitoring ({{ endpoints.data.length }})
                     </h1>
@@ -104,11 +102,16 @@ const submit = () => {
                         </div>
                     </section>
                 </div>
-                <div class="mt-8 flex flex-col">
+               
+                <div v-if="endpoints.data.length > 0" class="mt-8 flex flex-col">
                     <h1 class="font-semibold text-lg text-gray-800 leading-tight">Notification channels</h1>
                     <div class="grid grid-cols-3 gap-12 mt-4">
                         <email-notification :site="site.data" />
                     </div>
+                </div>
+
+                <div v-else class="max-w-7xl flex flex-col justify-center items-center mx-auto sm:px-6 lg:px-8">
+                   <img class="w-1/2" src="./../../../images/no_data.svg" alt="">
                 </div>
             </div>
         </div>

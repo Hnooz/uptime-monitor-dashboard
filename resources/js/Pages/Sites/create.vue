@@ -35,8 +35,8 @@
 </script>
 
 <template>
-    <button @click="addSite = true" class="flex items-center border rounded-md font-medium bg-gray-800 px-4 py-2 text-left capitalize  text-white hover:bg-gray-700 focus:outline-none focus:bg-gray-700 transition duration-150 ease-in-out">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+    <button @click="addSite = true" class="flex items-center gap-x-2 text-sm rounded-md font-medium bg-gray-800 px-4 py-2 text-left capitalize  text-white hover:bg-gray-700 focus:outline-none focus:bg-gray-700 transition duration-150 ease-in-out">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
             <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6" />
         </svg>
         <span>add site</span>

@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\Site;
 use App\Models\Check;
 use App\Models\Endpoint;
+use App\Observers\SiteObserver;
 use App\Events\EndpointWentDown;
 use App\Listeners\SendDownEmail;
 use App\Observers\CheckObserver;
@@ -42,6 +44,7 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Site::observe(SiteObserver::class);
         Endpoint::observe(EndpointObserver::class);
         Check::observe(CheckObserver::class);
     }

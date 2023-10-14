@@ -7,6 +7,7 @@ use Tightenco\Ziggy\Ziggy;
 use Illuminate\Http\Request;
 use App\Enums\EndpointFrequency;
 use App\Http\Resources\SiteResource;
+use Illuminate\Support\Facades\Session;
 use App\Http\Resources\FrequencyEnumResource;
 
 class HandleInertiaRequests extends Middleware
@@ -42,6 +43,12 @@ class HandleInertiaRequests extends Middleware
                     'location' => $request->url(),
                 ]);
             },
+            'flash' => function () {
+                return Session::get('toast');
+            },
+            'popstate' => false,
+            'sidebar' => false,
+            
             'frequencies' => FrequencyEnumResource::collection(EndpointFrequency::cases()),
 
             'sites' => $request->user() ? SiteResource::collection($request->user()->sites()->latest()->get()) : null,

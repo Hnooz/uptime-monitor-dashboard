@@ -14,23 +14,13 @@ class Site extends Model
     protected $guarded = [];
 
     protected $casts = [
-        'notification_emails' => 'array'
+        'notification_emails' => 'array',
+        'is_connected' => 'boolean'
     ];
 
     protected $attributes = [
         'notification_emails' => '[]'
     ];
-
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::updating(function($site){
-            if (in_array('default', array_keys($site->getDirty()))) {
-                $site->user->sites()->whereNot('id', $site->id)->update(['default' => false]);
-            }
-        });
-    }
 
     public function user():BelongsTo
     {
@@ -52,8 +42,8 @@ class Site extends Model
 
     public function name()
     {
-        $parsed_url = parse_url($this->domain);
-
+        $parsed_url = parse_url("$this->scheme://$this->domain");
+  
         $host_parts = explode('.', $parsed_url['host']);
 
         return $host_parts[1];
